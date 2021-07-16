@@ -3,7 +3,7 @@ title: "旧版本CRA打包构建速度优化"
 url: building_speed.html
 id: building_speed
 categories:
-  - 碎碎念
+  - 开发日志
 date: 2021-07-02 20:11:00
 tags:
 ---
