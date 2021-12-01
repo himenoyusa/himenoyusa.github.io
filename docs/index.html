@@ -68,7 +68,7 @@
           <li class="nav-item">
             <a class="nav-link" href="/">
               <i class="iconfont icon-home-fill"></i>
-              首页</a>
+              ホーム</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           <li class="nav-item">
             <a class="nav-link" href="/archives/">
               <i class="iconfont icon-archive-fill"></i>
-              归档</a>
+              アーカイブ</a>
           </li>
         
           
@@ -86,7 +86,7 @@
           <li class="nav-item">
             <a class="nav-link" href="/categories/">
               <i class="iconfont icon-category-fill"></i>
-              分类</a>
+              カテゴリー</a>
           </li>
         
           
@@ -95,7 +95,7 @@
           <li class="nav-item">
             <a class="nav-link" href="/about/">
               <i class="iconfont icon-user-fill"></i>
-              关于</a>
+              本ブログ情報　</a>
           </li>
         
           
@@ -104,7 +104,7 @@
           <li class="nav-item">
             <a class="nav-link" href="/links/">
               <i class="iconfont icon-link-fill"></i>
-              友链</a>
+              リンク</a>
           </li>
         
         
@@ -159,6 +159,43 @@
     
     
     <div class="col-12 col-md-12 mx-auto index-info">
+      <a class="index-header" href="/2021/12/01/20211201-BMapGL_bug/">干恁娘的百度地图开发体验</a>
+
+      <a href="/2021/12/01/20211201-BMapGL_bug/" class="index-excerpt">
+        
+        
+          
+        
+        <div>
+第一次在项目里接触地图开发，虽然直接使用了百度地图的 API，但还是遇到了不少问题，而且缺少最佳实践参考，很多逻辑都是自己设计实现，渲染性能也有点低。不过最大的问题是整出了内存泄漏，麻烦死了
+最大问题之内存泄漏虽然没有做严格测试，但基本可以确定是百度地图删除覆盖物内存未释放导致的问题，花了好些天才比较完美地绕过了这个 Bug，记录一下
+问题定位
+刚开始以为是自定义标记的写法不对导致了内存泄漏，果</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2021-12-01
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%BC%80%E5%8F%91%E6%97%A5%E5%BF%97/">开发日志</a>
+            
+          </div>
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
       <a class="index-header" href="/2021/07/02/building_speed/">旧版本CRA打包构建速度优化</a>
 
       <a href="/2021/07/02/building_speed/" class="index-excerpt">
@@ -182,7 +219,7 @@
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E7%A2%8E%E7%A2%8E%E5%BF%B5/">碎碎念</a>
+              <a href="/categories/%E5%BC%80%E5%8F%91%E6%97%A5%E5%BF%97/">开发日志</a>
             
           </div>
         
@@ -531,49 +568,11 @@ NAGA 作品，和白羽好像 w
     </div>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a class="index-header" href="/2020/01/18/20200118/">终于，只剩最后一点时间了</a>
-
-      <a href="/2020/01/18/20200118/" class="index-excerpt">
-        
-        
-          
-        
-        <div>
-私、何を…
-当然，是从乐观的角度来说，再熬过半年就结束了，终于终于要结束了
-长达 5 年的煎熬，虽然也不乏开心的事情，但也永远忘不了被逼入绝境的心情，现在终于看见曙光了，终于快走到终点了。
-以后的事情谁也无法预料，生活这么艰难，谁又过得容易呢，而我也不过是想过得稍微开心一点点而已。
-</div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2020-01-18
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E7%A2%8E%E7%A2%8E%E5%BF%B5/">碎碎念</a>
-            
-          </div>
-        
-        
-      </div>
-    </div>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="iconfont icon-arrowright"></i></a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
   
@@ -605,7 +604,7 @@ NAGA 作品，和白羽好像 w
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">検索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -614,7 +613,7 @@ NAGA 作品，和白羽好像 w
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">キーワード</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>

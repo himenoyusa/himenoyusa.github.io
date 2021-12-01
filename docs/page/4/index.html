@@ -17,7 +17,7 @@
   <meta name="description" content="">
   <meta name="author" content="yusa">
   <meta name="keywords" content="">
-  <title>アーカイブ - 星の音</title>
+  <title>星の音</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
@@ -46,7 +46,7 @@
 
 
 <body>
-  <header style="height: 60vh;">
+  <header style="height: 100vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -119,20 +119,24 @@
 </nav>
 
     <div class="view intro-2" id="background" parallax=true
-         style="background: url('/img/background1.jpg') no-repeat center center;
+         style="background: url('/img/star.jpg') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="container text-center white-text fadeInUp">
             <span class="h2" id="subtitle">
               
-                アーカイブ
+                It's the only NEET thing to do
               
             </span>
 
             
           </div>
 
+          
+            <div class="scroll-down-bar">
+              <i class="iconfont icon-arrowdown"></i>
+            </div>
           
         </div>
       </div>
@@ -143,39 +147,62 @@
     
       <div class="container nopadding-md">
         <div class="py-5" id="board"
-          >
+          style=margin-top:0>
           
           <div class="container">
             <div class="row">
               <div class="col-12 col-md-10 m-auto">
                 
 
-<div class="list-group">
-  <p class="h4">合計 31 件のポスト</p>
-  <hr>
-  
+
+  <div class="row mx-auto index-card">
     
-      
-      <p class="h5">2021</p>
     
-    <a href="/2021/12/01/20211201-BMapGL_bug/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">干恁娘的百度地图开发体验</span>
-      <span style="float: right;">12-01</span>
-    </a>
-  
-    
-    <a href="/2021/07/02/building_speed/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">旧版本CRA打包构建速度优化</span>
-      <span style="float: right;">07-02</span>
-    </a>
-  
-    
-    <a href="/2021/05/24/use_jointjs/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Jointjs 使用总结</span>
-      <span style="float: right;">05-24</span>
-    </a>
-  
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a class="index-header" href="/2019/01/23/20190123/">关于这坑爹的 linux 版网易云。。</a>
+
+      <a href="/2019/01/23/20190123/" class="index-excerpt">
+        
+        
+          
+        
+        <div>安装完之后打不开，，结果搜到的玄学方法是双击加载的时候，，右上打开关机选项，然后再关闭，，，，然后网易云界面就出来了。。奇葩了。。。
+
 </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2019-01-23
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%BC%80%E5%8F%91%E6%97%A5%E5%BF%97/">开发日志</a>
+            
+          </div>
+        
+        
+      </div>
+    </div>
+  </div>
+
+
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <a class="extend prev" rel="prev" href="/page/3/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
+    </span>
+  </nav>
+  
+  <script>
+    for (ele of document.getElementById("pagination").getElementsByTagName("a")) {
+      ele.href += '#board';
+    }
+  </script>
 
 
 
