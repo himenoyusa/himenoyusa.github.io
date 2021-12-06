@@ -2,6 +2,7 @@
 title: "干恁娘的百度地图开发体验"
 url: bmapgl_bug.html
 id: bmapgl_bug
+index_img: /img/post/87812944_p0.jpg
 categories:
   - 开发日志
 date: 2021-12-01 10:30:00

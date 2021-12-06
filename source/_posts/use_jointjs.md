@@ -2,6 +2,7 @@
 title: "Jointjs 使用总结"
 url: use_jointjs.html
 id: use_jointjs
+index_img: /img/post/atri.png
 categories:
   - 开发日志
 date: 2021-05-24 09：30：00

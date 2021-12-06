@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.ico">
+  <link rel="icon" type="image/png" href="/img/favicon.ico">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="yusa">
+  <meta name="keywords" content="">
+  <title>旧版本CRA打包构建速度优化 - 星の音</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_fmb4a04yx8h.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>星の音</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">
+              <i class="iconfont icon-home-fill"></i>
+              ホーム</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">
+              <i class="iconfont icon-archive-fill"></i>
+              アーカイブ</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">
+              <i class="iconfont icon-category-fill"></i>
+              カテゴリー</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">
+              <i class="iconfont icon-user-fill"></i>
+              本ブログ情報　</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/links/">
+              <i class="iconfont icon-link-fill"></i>
+              リンク</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/background1.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.4)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+                旧版本CRA打包构建速度优化
+              
+            </span>
+
+            
+              
+                <div class="mt-3 post-meta">
+                  <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+                  <time datetime="2021-07-02 20:11">
+                    2021年7月2日 晚上
+                  </time>
+                </div>
+              
+
+              <div class="mt-1">
+                
+                  
+                  <span class="post-meta mr-2">
+                    <i class="iconfont icon-chart"></i>
+                    772 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta mr-2">
+                      <i class="iconfont icon-clock-fill"></i>
+                    
+                    
+                    9
+                     分钟
+                  </span>
+                
+
+                
+              </div>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <article class="markdown-body">
+              <p><img src="/img/post/gura.jpg" srcset="/img/loading.gif" alt="gura"></p>
+<p>公司项目由于使用的 react-scripts 版本太老，试了一下没办法一步升级到最新版本，每次打包都得花 15 分钟左右，实在是急死人。</p>
+<p>最近实在忍不住了，尝试对打包速度进行了优化。走了一些弯路，但是最后打包时间缩短到了 1 分钟，还是非常欣慰的。</p>
+<h2 id="优化思路"><a href="#优化思路" class="headerlink" title="优化思路"></a>优化思路</h2><p>首先弄清楚优化思路很重要，webpack 可以使用 SMP(speed-measure-webpack-plugin) 对打包时间进行记录，打包完成后会显示每个 loader 和插件运行耗费的时间，然后针对耗时高的 loader 和插件进行优化。</p>
+<h2 id="具体方法"><a href="#具体方法" class="headerlink" title="具体方法"></a>具体方法</h2><p>分析了很久才发现打包耗时是因为 uglify 实在是太慢了，各大代码平台也提到了这个问题，本来想通过升级整体架构来解决，但是遇到的冲突太多了，不得不另想办法。</p>
+<h3 id="重点针对-uglify-进行优化"><a href="#重点针对-uglify-进行优化" class="headerlink" title="重点针对 uglify 进行优化"></a>重点针对 uglify 进行优化</h3><p>uglify 的优化思路其实很简单，多线程 + 缓存。</p>
+<ol>
+<li>使用 <code>webpack-parallel-uglify-plugin</code> 代替原有的 uglify 插件</li>
+</ol>
+<p>安装插件前还要注意版本，太新的版本可能不兼容</p>
+<blockquote>
+<p>注意如果使用 config-override 进行配置，需要对原有的 uglify 插件进行覆盖</p>
+</blockquote>
+<ol>
+<li>使用 ParallelUglifyPlugin 的配置时要注意可能对代码造成的侵入性改动，建议关闭不必要的优化选项</li>
+</ol>
+<h3 id="针对-babel-loader-进行优化"><a href="#针对-babel-loader-进行优化" class="headerlink" title="针对 babel-loader 进行优化"></a>针对 babel-loader 进行优化</h3><p>babel 其实也是比较耗时的，尝试用 <code>esbuild-loader</code> 替换 <code>babel-loader</code> 之后发现，<code>esbuild-loader</code> 并不支持直接转换 ES6 代码，而项目本身的代码质量过低，没办法直接使用 <code>esbuild-loader</code> 进行构建，所以使用 <code>thread-loader</code> 开启 babel-loader 多线程。</p>
+<h2 id="配置参考"><a href="#配置参考" class="headerlink" title="配置参考"></a>配置参考</h2><pre><code class="hljs js"><span class="hljs-comment">// /config-overrides.js</span>
+
+<span class="hljs-keyword">const</span> &#123; injectBabelPlugin, getBabelLoader &#125; = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react-app-rewired'</span>);
+<span class="hljs-keyword">const</span> rewireLess = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react-app-rewire-less'</span>);
+<span class="hljs-keyword">const</span> ParallelUglifyPlugin = <span class="hljs-built_in">require</span>(<span class="hljs-string">'webpack-parallel-uglify-plugin'</span>);
+
+<span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);
+<span class="hljs-keyword">const</span> &#123; override, addWebpackAlias, disableEsLint &#125; = <span class="hljs-built_in">require</span>(<span class="hljs-string">'customize-cra'</span>);
+
+<span class="hljs-keyword">const</span> conf = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-function">(<span class="hljs-params">config, env</span>) =&gt;</span> &#123;
+  <span class="hljs-comment">// ...其他配置</span>
+  <span class="hljs-comment">// 开启 babel 多线程</span>
+  <span class="hljs-keyword">const</span> babelLoader = getBabelLoader(config.module.rules);
+  <span class="hljs-keyword">const</span> &#123; options &#125; = babelLoader;
+  options.cacheDirectory = <span class="hljs-literal">true</span>;
+  babelLoader.use = [
+    &#123; <span class="hljs-attr">loader</span>: <span class="hljs-string">'thread-loader'</span>, <span class="hljs-attr">options</span>: &#123; <span class="hljs-attr">workers</span>: <span class="hljs-number">15</span>, <span class="hljs-attr">workerParallelJobs</span>: <span class="hljs-number">50</span>, <span class="hljs-attr">poolTimeout</span>: <span class="hljs-number">2000</span> &#125; &#125;,
+    &#123;
+      loader: babelLoader.loader,
+      options,
+    &#125;,
+  ];
+  <span class="hljs-keyword">delete</span> babelLoader.loader;
+  <span class="hljs-keyword">delete</span> babelLoader.options;
+
+  <span class="hljs-keyword">if</span> (env === <span class="hljs-string">'production'</span>) &#123;
+    <span class="hljs-comment">// 开启 uglify 多线程</span>
+    config.plugins.splice(<span class="hljs-number">3</span>, <span class="hljs-number">1</span>);
+    config.plugins.push(
+      <span class="hljs-keyword">new</span> ParallelUglifyPlugin(&#123;
+        parallel: <span class="hljs-literal">true</span>,
+        <span class="hljs-comment">// 本质上还是用了 UglifyJS，以下是传给 UglifyJS 的参数，优化的点在于开启了多进程</span>
+        uglifyJS: &#123;
+          output: &#123;
+            beautify: <span class="hljs-literal">false</span>, <span class="hljs-comment">// 使用紧凑的输出</span>
+            comments: <span class="hljs-literal">false</span>, <span class="hljs-comment">// 删除所有的注释</span>
+          &#125;,
+          compress: &#123;
+            drop_console: <span class="hljs-literal">true</span>, <span class="hljs-comment">// 删除所有 console</span>
+            collapse_vars: <span class="hljs-literal">false</span>, <span class="hljs-comment">// 内嵌定义了但是只用到一次的变量</span>
+            reduce_vars: <span class="hljs-literal">false</span>, <span class="hljs-comment">// 提取出出现多次，但是没有定义成变量去引用的静态值</span>
+            unused: <span class="hljs-literal">false</span>, <span class="hljs-comment">// 提取未使用的局部变量</span>
+            drop_debugger: <span class="hljs-literal">true</span>, <span class="hljs-comment">// 删除所有 debugger</span>
+            keep_fnames: <span class="hljs-literal">true</span>, <span class="hljs-comment">// 保持函数名</span>
+          &#125;,
+        &#125;,
+        cacheDir: <span class="hljs-string">'cache'</span>, <span class="hljs-comment">// 开启缓存</span>
+      &#125;)
+    );
+  &#125;
+  <span class="hljs-keyword">return</span> config;
+&#125;;
+
+<span class="hljs-built_in">module</span>.exports = override(
+  <span class="hljs-comment">// ...其他配置</span>
+  conf(), <span class="hljs-comment">// 将自定义配置组合进来</span>
+);</code></pre>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>提到优化，首先还是得分析问题所在，然后尝试不同的方向去解决问题，不能想当然套用别人的优化方式。</p>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%BC%80%E5%8F%91%E6%97%A5%E5%BF%97/">开发日志</a>
+                    
+                  </div>
+                
+                
+              </div>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/20211201-BMapGL_bug/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">干恁娘的百度地图开发体验</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/use_jointjs/">
+                        <span class="hidden-mobile">Jointjs 使用总结</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;ディレクトリ</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">検索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">キーワード</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+  <div>
+    
+      <!-- 不蒜子统计PV -->
+      
+      <span id="busuanzi_container_site_pv" style="display: none">
+      总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    </span>
+    
+    
+      <!-- 不蒜子统计UV -->
+      
+      <span id="busuanzi_container_site_uv" style="display: none">
+      总访客数 <span id="busuanzi_value_site_uv"></span> 人
+    </span>
+    
+  </div>
+
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+<!-- Plugins -->
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

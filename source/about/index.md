@@ -1,10 +1,10 @@
 ---
 title: about
-date: 2020-06-04 00:08:54
+date: 2021-12-06 16:12:54
 layout: about
 ---
 
-## Kanata  
+## 星の音  
 
 > It's the only NEET thing to do  
 

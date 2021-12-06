@@ -2,6 +2,8 @@
 title: "旧版本CRA打包构建速度优化"
 url: building_speed.html
 id: building_speed
+index_img: /img/post/gura.jpg
+# banner_img: /img/post/gura.jpg
 categories:
   - 开发日志
 date: 2021-07-02 20:11:00
