@@ -23,6 +23,25 @@
   
   
   <entry>
+    <title>Webpack 多级路由与 Echarts 折线非节点选中</title>
+    <link href="/20211214-summary/"/>
+    <url>/20211214-summary/</url>
+    
+    <content type="html"><![CDATA[<p><img src="/img/post/77329102_p10.jpg" srcset="/img/loading.gif" alt="77329102_p10"></p><p>总结一下最近遇到的两个小问题</p><h2 id="Webpack-多级路由导致二级路由刷新-404-的问题"><a href="#Webpack-多级路由导致二级路由刷新-404-的问题" class="headerlink" title="Webpack 多级路由导致二级路由刷新 404 的问题"></a>Webpack 多级路由导致二级路由刷新 404 的问题</h2><p>React 配置多级路由之后, Webpack 如果没有特意配置的话, 可能会出现二级路由页面刷新报 404 的问题, 咕咕搜出来的解决方法一般是在 Webpack 的 output 里面增加配置项 <code>output: { publicPath: &#39;/&#39; }</code></p><p>这样可以解决二级路由刷新 404, 但是又会导致打包之后图片等静态文件引入路径不对的问题</p><h3 id="完整解决方法"><a href="#完整解决方法" class="headerlink" title="完整解决方法"></a>完整解决方法</h3><ol><li>Webpack 添加配置项 <code>output: { publicPath: &#39;/&#39; }</code></li><li>Webpack file-loader 添加 options, 配置静态文件输出路径 <code>options: { outputPath: &#39;images/&#39; }</code></li><li>Webpack url-loader 添加 options, 配置静态文件输出路径 <code>options: { outputPath: &#39;images/&#39; }</code></li></ol><h2 id="Echarts-折线非节点选中问题"><a href="#Echarts-折线非节点选中问题" class="headerlink" title="Echarts 折线非节点选中问题"></a>Echarts 折线非节点选中问题</h2><p>Echarts 自带的事件监听里面, 鼠标 click 对于折线只有数据点能触发, 折线上的其他部分是无法触发的, 咕咕搜出来全是抄来抄去的重复答案, 而且根本解决不了问题</p><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><ol><li>利用 getZr 函数绑定图表事件</li><li><strong>重点</strong> 设置 series 的 z 属性, 用于判断当前触发的是哪个 series</li><li>执行业务操作</li></ol><blockquote><p>直接贴个代码</p></blockquote><pre><code class="hljs js"><span class="hljs-comment">// 注意 series 配置, 添加 z 属性 (或者用其他非官方属性来作为索引, 没试过, 应该也可以)</span><span class="hljs-comment">/*</span><span class="hljs-comment">  options &#123;</span><span class="hljs-comment">    ...</span><span class="hljs-comment">    series: &#123;</span><span class="hljs-comment">      ...</span><span class="hljs-comment">      z: [index],</span><span class="hljs-comment">    &#125;</span><span class="hljs-comment">  &#125;</span><span class="hljs-comment">*/</span><span class="hljs-comment">// echarts 实例, echarts-for-react 用 ref 获取, 普通 echarts 直接 init 获取</span><span class="hljs-keyword">const</span> echartsInstance = echartsRef.current.getEchartsInstance();echartsInstance.getZr().on(<span class="hljs-string">"click"</span>, click);<span class="hljs-comment">// 必须用 getZr 来绑定事件, 不然没办法触发折线事件</span><span class="hljs-comment">// 可以绑定 mousemove, click 等</span><span class="hljs-comment">/**</span><span class="hljs-comment"> * 事件回调</span><span class="hljs-comment"> */</span><span class="hljs-keyword">const</span> click = <span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> &#123;  <span class="hljs-keyword">const</span> echartsInstance = echartsRef.current.getEchartsInstance();  <span class="hljs-comment">// 获取当前点击的位置</span>  <span class="hljs-keyword">const</span> &#123; target, offsetX, offsetY &#125; = e;  <span class="hljs-keyword">const</span> pointInPixel = [offsetX, offsetY];  <span class="hljs-comment">// 判断点击是否位于图表内</span>  <span class="hljs-keyword">if</span> (echartsInstance.containPixel(<span class="hljs-string">"grid"</span>, pointInPixel)) &#123;    <span class="hljs-comment">// 获取点击的 seriesIndex</span>    <span class="hljs-keyword">if</span> (target) &#123;      <span class="hljs-keyword">const</span> index = target.z;      <span class="hljs-comment">// 利用 series 的 z 属性获取当前的折线 series 索引</span>      <span class="hljs-comment">// 执行其他逻辑</span>      <span class="hljs-comment">// ...</span>    &#125; <span class="hljs-keyword">else</span> &#123;      <span class="hljs-comment">// 执行取消选中逻辑</span>      <span class="hljs-comment">// ...</span>    &#125;  &#125;&#125;;</code></pre>]]></content>
+    
+    
+    <categories>
+      
+      <category>开发日志</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>旧版本CRA打包构建速度优化</title>
     <link href="/building_speed/"/>
     <url>/building_speed/</url>

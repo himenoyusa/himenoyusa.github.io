@@ -68,7 +68,7 @@
           <li class="nav-item">
             <a class="nav-link" href="/">
               <i class="iconfont icon-home-fill"></i>
-              ホーム</a>
+              Home</a>
           </li>
         
           
@@ -77,7 +77,7 @@
           <li class="nav-item">
             <a class="nav-link" href="/archives/">
               <i class="iconfont icon-archive-fill"></i>
-              アーカイブ</a>
+              Archives</a>
           </li>
         
           
@@ -86,7 +86,7 @@
           <li class="nav-item">
             <a class="nav-link" href="/categories/">
               <i class="iconfont icon-category-fill"></i>
-              カテゴリー</a>
+              Categories</a>
           </li>
         
           
@@ -95,7 +95,7 @@
           <li class="nav-item">
             <a class="nav-link" href="/about/">
               <i class="iconfont icon-user-fill"></i>
-              本ブログ情報　</a>
+              About</a>
           </li>
         
           
@@ -104,7 +104,7 @@
           <li class="nav-item">
             <a class="nav-link" href="/links/">
               <i class="iconfont icon-link-fill"></i>
-              リンク</a>
+              Links</a>
           </li>
         
         
@@ -177,6 +177,48 @@
 最大问题之内存泄漏虽然没有做严格测试，但基本可以确定是百度地图删除覆盖物内存未释放导致的问题，花了好些天才比较完美地绕过了这个 Bug，记录一下
 问题定位
 刚开始以为是自定义标记的写法不对导致了内存泄漏，果</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2021-12-01
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%BC%80%E5%8F%91%E6%97%A5%E5%BF%97/">开发日志</a>
+            
+          </div>
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/20211214-summary/" target="_self">
+          <img src="/img/post/77329102_p10.jpg" srcset="/img/loading.gif" alt="Webpack 多级路由与 Echarts 折线非节点选中">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a class="index-header" href="/20211214-summary/">Webpack 多级路由与 Echarts 折线非节点选中</a>
+
+      <a href="/20211214-summary/" class="index-excerpt">
+        
+        
+          
+        
+        <div>
+总结一下最近遇到的两个小问题
+Webpack 多级路由导致二级路由刷新 404 的问题React 配置多级路由之后, Webpack 如果没有特意配置的话, 可能会出现二级路由页面刷新报 404 的问题, 咕咕搜出来的解决方法一般是在 Webpack 的 output 里面增加配置项 output: { publicPath: &#39;/&#39; }
+这样可以解决二级路由刷新 404, 但是</div>
       </a>
 
       <div class="index-btm post-metas">
@@ -584,50 +626,6 @@ NAGA 作品，和白羽好像 w
     </div>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/20200226/" target="_self">
-          <img src="/img/post/ERmYjQIUEAIc5lW.png" srcset="/img/loading.gif" alt="烦恼总是接连不断">
-        </a>
-      </div>
-    
-    <div class="col-12 col-md-8 mx-auto index-info">
-      <a class="index-header" href="/20200226/">烦恼总是接连不断</a>
-
-      <a href="/20200226/" class="index-excerpt">
-        
-        
-          
-        
-        <div>
-今年二月还有 29 号
-该为找工作发愁了。。之前觉得 PHP 的水平找工作应该不难，现在看来简直太天真了，根本就啥也不懂 ww
-但是要不要转学前端呢，前端要补的东西还有很多，虽然 PHP 也要补但是基础比前端还是好一点。长远来看的话，PHP 竞争力肯定不如前端，但是 PHP 可以转后端架构，甚至转大数据。当然首先问题是能不能找到工作吧 ww
-还是得先把网站项目做完，多学点东西再说吧
-</div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2020-02-26
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E7%A2%8E%E7%A2%8E%E5%BF%B5/">碎碎念</a>
-            
-          </div>
-        
-        
-      </div>
-    </div>
-  </div>
-
 
 
   <nav aria-label="navigation">
@@ -664,7 +662,7 @@ NAGA 作品，和白羽好像 w
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">検索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -673,7 +671,7 @@ NAGA 作品，和白羽好像 w
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">キーワード</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
