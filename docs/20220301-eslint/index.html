@@ -17,7 +17,7 @@
   <meta name="description" content="">
   <meta name="author" content="yusa">
   <meta name="keywords" content="">
-  <title>最近遇到的一些坑 - 星の音</title>
+  <title>ESLint 与 Prettier 针对 TS 的配置总结 - 星の音</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
@@ -126,7 +126,7 @@
           <div class="container text-center white-text fadeInUp">
             <span class="h2" id="subtitle">
               
-                最近遇到的一些坑
+                ESLint 与 Prettier 针对 TS 的配置总结
               
             </span>
 
@@ -134,8 +134,8 @@
               
                 <div class="mt-3 post-meta">
                   <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-                  <time datetime="2020-06-07 20:25">
-                    2020年6月7日 晚上
+                  <time datetime="2022-03-01 09:10">
+                    2022年3月1日 上午
                   </time>
                 </div>
               
@@ -145,7 +145,7 @@
                   
                   <span class="post-meta mr-2">
                     <i class="iconfont icon-chart"></i>
-                    720 字
+                    847 字
                   </span>
                 
 
@@ -155,7 +155,7 @@
                       <i class="iconfont icon-clock-fill"></i>
                     
                     
-                    9
+                    11
                      分钟
                   </span>
                 
@@ -184,79 +184,127 @@
           <div class="post-content mx-auto" id="post">
             
             <article class="markdown-body">
-              <p><img src="/img/post/2020-06-07.jpg" srcset="/img/loading.gif" alt=""></p>
-<h3 id="最近几天写-React、配置内网穿透遇到一些坑，记录一下。"><a href="#最近几天写-React、配置内网穿透遇到一些坑，记录一下。" class="headerlink" title="最近几天写 React、配置内网穿透遇到一些坑，记录一下。"></a>最近几天写 React、配置内网穿透遇到一些坑，记录一下。</h3><hr>
-<h2 id="nginx-proxy-pass-路径解析"><a href="#nginx-proxy-pass-路径解析" class="headerlink" title="nginx proxy_pass 路径解析"></a>nginx proxy_pass 路径解析</h2><blockquote>
-<p>在 <code>location</code> 块中，路径最后有无 <code>/</code> 号对解析结果影响很大，例如：</p>
+              <p><img src="/img/post/FLjR8QLaIAM4qI4.jpg" srcset="/img/loading.gif" alt="FLjR8QLaIAM4qI4"></p>
+<p>ESLint 配置真的是项目搭建永远的痛, 特别是加上 TS 之后, 简直就是噩梦级别</p>
+<h2 id="配置参考"><a href="#配置参考" class="headerlink" title="配置参考"></a>配置参考</h2><p>有位老哥总结了一整版专门讲 ESLint 相关的配置说明, 很有学习价值, 建议看完 <a href="https://github.yanhaixiang.com/linter-guide/" target="_blank" rel="noopener">链接点这里</a></p>
+<h2 id="个人配置总结"><a href="#个人配置总结" class="headerlink" title="个人配置总结"></a>个人配置总结</h2><h3 id="TS-配置"><a href="#TS-配置" class="headerlink" title="TS 配置"></a>TS 配置</h3><ul>
+<li>TS 项目首先肯定要配置 tsconfig.json, 先贴上文件, 具体配置项可以参考 <a href="https://drylint.com/Typescript/tsconfig.json.html" target="_blank" rel="noopener">这里</a></li>
+</ul>
+<blockquote>
+<p>json 文件复制使用需要去掉注释</p>
 </blockquote>
-<pre><code class="hljs nginx"><span class="hljs-attribute">location</span> /api/ &#123;
-    <span class="hljs-attribute">proxy_pass</span> http://kanata.moe/;
-&#125;
-<span class="hljs-attribute">location</span> /api/ &#123;
-    <span class="hljs-attribute">proxy_pass</span> http://kanata.moe;
+<pre><code class="hljs json">&#123;
+  <span class="hljs-attr">"compilerOptions"</span>: &#123;
+     <span class="hljs-comment">// 基本配置项</span>
+    <span class="hljs-attr">"jsx"</span>: <span class="hljs-string">"react"</span>, <span class="hljs-comment">// 识别 jsx</span>
+    <span class="hljs-attr">"esModuleInterop"</span>: <span class="hljs-literal">true</span>, <span class="hljs-comment">// 处理 import 导入</span>
+    <span class="hljs-attr">"sourceMap"</span>: <span class="hljs-literal">true</span>, <span class="hljs-comment">// 生成相应的 .map 文件</span>
+    <span class="hljs-attr">"resolveJsonModule"</span>: <span class="hljs-literal">true</span>, <span class="hljs-comment">// 是否解析导入的 .json 文件</span>
+    <span class="hljs-attr">"target"</span>: <span class="hljs-string">"es5"</span>, <span class="hljs-comment">// 指定目标版本</span>
+    <span class="hljs-attr">"lib"</span>: [<span class="hljs-string">"es5"</span>, <span class="hljs-string">"es2015"</span>, <span class="hljs-string">"es2016"</span>, <span class="hljs-string">"dom"</span>, <span class="hljs-string">"es2015.promise"</span>], <span class="hljs-comment">// 指定编译过程中需要包含的库文件列表</span>
+    <span class="hljs-attr">"module"</span>: <span class="hljs-string">"ESNext"</span>, <span class="hljs-comment">// 指定生成哪个模块系统代码</span>
+    <span class="hljs-attr">"moduleResolution"</span>: <span class="hljs-string">"node"</span>, <span class="hljs-comment">// 决定如何处理模块</span>
+    <span class="hljs-attr">"allowJs"</span>: <span class="hljs-literal">true</span>, <span class="hljs-comment">// 是否允许编译 js 文件</span>
+    <span class="hljs-attr">"strict"</span>: <span class="hljs-literal">true</span>, <span class="hljs-comment">// 是否开启所有严格类型检查</span>
+    <span class="hljs-attr">"noImplicitAny"</span>: <span class="hljs-literal">false</span>, <span class="hljs-comment">// 是否禁止使用隐式 any</span>
+    <span class="hljs-attr">"downlevelIteration"</span>: <span class="hljs-literal">true</span>, <span class="hljs-comment">// 是否为低版本编译目标提供迭代器的完整支持</span>
+    <span class="hljs-attr">"forceConsistentCasingInFileNames"</span>: <span class="hljs-literal">true</span>, <span class="hljs-comment">// 是否强制对同一文件使用一致的大小写引用</span>
+    <span class="hljs-attr">"experimentalDecorators"</span>: <span class="hljs-literal">true</span>, <span class="hljs-comment">// 是否启用装饰器</span>
+    <span class="hljs-attr">"emitDecoratorMetadata"</span>: <span class="hljs-literal">true</span>, <span class="hljs-comment">// 是否给装饰器声明生成元数据 (反射相关), 需要配合 reflect-metadata 包进行使用</span>
+
+    <span class="hljs-comment">// 目录配置</span>
+    <span class="hljs-attr">"rootDir"</span>: <span class="hljs-string">"./"</span>, <span class="hljs-comment">// 指定输入文件的根目录, 以控制 outDir 的输出目录结构</span>
+    <span class="hljs-attr">"outDir"</span>: <span class="hljs-string">"./dist"</span>, <span class="hljs-comment">// 定义输出结构目录</span>
+    <span class="hljs-attr">"paths"</span>: &#123; <span class="hljs-comment">// 指定路径别名映射</span>
+      <span class="hljs-attr">"@src/*"</span>: [<span class="hljs-string">"./src/*"</span>]
+    &#125;
+  &#125;,
+
+  <span class="hljs-comment">// 指定编译器需要包含的文件, 配置之后一般不需要再配置 exclude, 注意一般可以把 eslintrc 等文件单独加进来</span>
+  <span class="hljs-attr">"include"</span>: [<span class="hljs-string">"src"</span>, <span class="hljs-string">"./.eslintrc.js"</span>, <span class="hljs-string">"./postcss.config.js"</span>, <span class="hljs-string">"webpack/*.js"</span>]
 &#125;</code></pre>
 
-<p>这两种方式的解析结果是不一样的</p>
-<ul>
-<li>第一种方式，访问 <code>/api</code> 时，解析结果为 <a href="http://kanata.moe/" target="_blank" rel="noopener">http://kanata.moe/</a></li>
-<li>第二种方式，访问 <code>/api</code> 时，解析结果为 <a href="http://kanata.moe/api" target="_blank" rel="noopener">http://kanata.moe/api</a></li>
+<h3 id="ESLint-配置"><a href="#ESLint-配置" class="headerlink" title="ESLint 配置"></a>ESLint 配置</h3><ul>
+<li>下面才是大头, 个人配置仅供参考, 建议详细阅读文章开头的博文</li>
+<li>为了方便配置 rules, 我没用 override 分别对 ts 和 js 进行配置, 项目里的 js 文件也很少, 所以干脆不管了</li>
 </ul>
-<hr>
-<h2 id="koa2-组件-koa-body-与-koa-bodyParser-的冲突"><a href="#koa2-组件-koa-body-与-koa-bodyParser-的冲突" class="headerlink" title="koa2 组件 koa-body 与 koa-bodyParser 的冲突"></a>koa2 组件 koa-body 与 koa-bodyParser 的冲突</h2><p><code>koa-body</code> 组件能够处理文件上传和参数传递，而 <code>koa-bodyParser</code> 只能处理参数</p>
-<blockquote>
-<p>两个组件不能同时使用，否则 koa 可能不报错，但一直无响应</p>
-</blockquote>
-<h3 id="艰难的调试过程"><a href="#艰难的调试过程" class="headerlink" title="艰难的调试过程"></a>艰难的调试过程</h3><ol>
-<li>前端 React 发出 ajax POST 上传文件请求，后端返回 504 响应超时</li>
-<li>前端 Postman 模拟 POST 带参数请求，后端返回 200 处理成功</li>
-<li>前端确认 React 中 ajax 请求代码无误</li>
-<li>检查 nginx 代理设置与跨域设置，添加跨域选项（前后端并未发生跨域请求，删除跨域选项）</li>
-<li>检查 koa2 路由设置正常，log 无报错，使用 console.log() 发现请求并未到达路由</li>
-<li>检查 koa2 接收的访问参数、访问地址正常</li>
-<li>用 console.log() 逐级排查 koa2 洋葱模型</li>
-<li>定位到 core/init.js 中对 koa-body 和 koa-bodyParser 的引用</li>
-<li>尝试删除对 koa-bodyParser 的引用，bug 修复成功</li>
-</ol>
-<hr>
-<h2 id="MySQL-触发器的编写"><a href="#MySQL-触发器的编写" class="headerlink" title="MySQL 触发器的编写"></a>MySQL 触发器的编写</h2><p>MySQL 触发器是个非常方便的功能，能够快速实现数据表之间的数据关联，例：</p>
-<pre><code class="hljs sql"><span class="hljs-keyword">USE</span> setu;
-<span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TRIGGER</span> <span class="hljs-keyword">IF</span> <span class="hljs-keyword">EXISTS</span> count_score;
-<span class="hljs-comment"># 将结束符号替换为 $$</span>
-DELIMITER $$
-<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TRIGGER</span> count_score <span class="hljs-keyword">AFTER</span> <span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">ON</span> scores <span class="hljs-keyword">FOR</span> <span class="hljs-keyword">EACH</span> <span class="hljs-keyword">ROW</span>
-<span class="hljs-keyword">BEGIN</span>
-    <span class="hljs-comment"># 不能直接对 DECLARE 的变量赋值</span>
-    <span class="hljs-keyword">DECLARE</span> newScore <span class="hljs-built_in">INT</span>;
-    <span class="hljs-comment"># 使用 INTO 将 SELECT 结果赋值给变量</span>
-    <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">ROUND</span>(<span class="hljs-keyword">AVG</span>(score)) <span class="hljs-keyword">INTO</span> newScore <span class="hljs-keyword">FROM</span> scores <span class="hljs-keyword">WHERE</span> scores.picture_id = NEW.picture_id;
-    <span class="hljs-keyword">UPDATE</span> pictures <span class="hljs-keyword">SET</span> total_score = newScore <span class="hljs-keyword">WHERE</span> pictures.picture_id = NEW.picture_id;
-<span class="hljs-keyword">END</span>$$
-<span class="hljs-comment"># 将结束符号还原为 ;</span>
-DELIMITER ;</code></pre>
+<pre><code class="hljs js"><span class="hljs-built_in">module</span>.exports = &#123;
+  env: &#123;
+    <span class="hljs-comment">// 支持浏览器环境</span>
+    browser: <span class="hljs-literal">true</span>,
+    <span class="hljs-comment">// 支持node 环境</span>
+    node: <span class="hljs-literal">true</span>,
+    <span class="hljs-comment">// 支持ES2021</span>
+    es2021: <span class="hljs-literal">true</span>,
+  &#125;,
+  <span class="hljs-comment">// 继承规则</span>
+  extends: [
+    <span class="hljs-string">'airbnb-typescript'</span>, <span class="hljs-comment">// airbnb 规则</span>
+    <span class="hljs-string">'plugin:react/recommended'</span>, <span class="hljs-comment">// react 规则</span>
+    <span class="hljs-string">'plugin:import/recommended'</span>, <span class="hljs-comment">// 支持 import/export</span>
+    <span class="hljs-string">'plugin:prettier/recommended'</span>, <span class="hljs-comment">// 一键配置 prettier</span>
+  ],
+  parser: <span class="hljs-string">'@typescript-eslint/parser'</span>, <span class="hljs-comment">// 处理 TS 文件</span>
+  parserOptions: &#123;
+    project: [<span class="hljs-string">'./tsconfig.json'</span>], <span class="hljs-comment">// 告诉 eslint：tsconfig 在哪</span>
+    sourceType: <span class="hljs-string">'module'</span>, <span class="hljs-comment">// 支持 import/export</span>
+  &#125;,
+  plugins: [
+    <span class="hljs-comment">// 使用 typescript x eslint 的插件</span>
+    <span class="hljs-string">'@typescript-eslint'</span>,
+  ],
+  settings: &#123;
+    <span class="hljs-comment">// 自动检查 react 版本</span>
+    react: &#123;
+      version: <span class="hljs-string">'detect'</span>,
+    &#125;,
+    <span class="hljs-comment">// 配置路径别名</span>
+    <span class="hljs-string">'import/resolver'</span>: &#123;
+      alias: &#123;
+        map: [[<span class="hljs-string">'@src'</span>, <span class="hljs-string">'./src'</span>]],
+        extensions: [<span class="hljs-string">'.tsx'</span>, <span class="hljs-string">'.ts'</span>, <span class="hljs-string">'.jsx'</span>, <span class="hljs-string">'.js'</span>],
+      &#125;,
+    &#125;,
+  &#125;,
+  rules: &#123;
+    <span class="hljs-string">'no-console'</span>: <span class="hljs-string">'off'</span>,
+    <span class="hljs-string">'@typescript-eslint/no-unused-vars'</span>: <span class="hljs-string">'off'</span>,
+    eqeqeq: <span class="hljs-string">'off'</span>, <span class="hljs-comment">// 禁用 == 等号</span>
+    <span class="hljs-string">'jsx-a11y/click-events-have-key-events'</span>: <span class="hljs-string">'off'</span>,
+    <span class="hljs-string">'class-methods-use-this'</span>: <span class="hljs-string">'off'</span>,
+    <span class="hljs-string">'react/no-danger'</span>: <span class="hljs-string">'off'</span>, <span class="hljs-comment">// dangerousSetInnerHTML</span>
+    <span class="hljs-comment">// 'linebreak-style': 'off', // 换行符</span>
+  &#125;,
+&#125;;</code></pre>
 
-<p>其中，<code>NEW</code> 指即将插入或已经插入的行，<code>OLD</code> 指即将删除或已经删除的行</p>
-<p>数学计算函数分别有：</p>
-<p><code>AVG() 求平均值</code><br><code>ROUND() 四舍五入取整</code><br><code>CEILING() 向上取整</code><br><code>FLOOR() 向下取整</code></p>
-<hr>
-<h2 id="Let’s-encrypt-泛域名证书的申请"><a href="#Let’s-encrypt-泛域名证书的申请" class="headerlink" title="Let’s encrypt 泛域名证书的申请"></a>Let’s encrypt 泛域名证书的申请</h2><p>其实用 certbot 非常简单，首先安装 certbot，然后执行一条命令：</p>
-<blockquote>
-<p><code>sudo certbot certonly --preferred-challenges dns --manual -d kanata.moe -d *.kanata.moe</code></p>
-</blockquote>
 <ul>
-<li><code>certonly</code> 仅生成证书</li>
-<li><code>--preferred-challenges dns</code> 选择验证方式为 dns</li>
-<li><code>--manual</code> 手动模式</li>
-<li><code>-d</code> 泛域名可以用 * 号，但主域名也必须同时作为参数</li>
+<li>需要用到的包有很多, 大概列一下</li>
 </ul>
-<p>验证过程中，会要求在 dns 解析记录里添加一条 txt 解析<br>然后在 nginx 配置中引入证书路径即可，如：</p>
-<pre><code class="hljs nginx"><span class="hljs-section">server</span> &#123;
-    <span class="hljs-comment"># ...</span>
-    <span class="hljs-attribute">ssl_certificate</span> /etc/letsencrypt/live/kanata.moe/fullchain.pem;
-    <span class="hljs-attribute">ssl_certificate_key</span> /etc/letsencrypt/live/kanata.moe/privkey.pem;
-    <span class="hljs-comment"># ...</span>
+<pre><code class="hljs json">&#123;
+  <span class="hljs-attr">"@typescript-eslint/eslint-plugin"</span>: <span class="hljs-string">"^4.31.2"</span>,
+  <span class="hljs-attr">"@typescript-eslint/parser"</span>: <span class="hljs-string">"^4.31.2"</span>,
+  <span class="hljs-attr">"eslint"</span>: <span class="hljs-string">"^7.32.0"</span>,
+  <span class="hljs-attr">"eslint-config-airbnb"</span>: <span class="hljs-string">"^18.2.1"</span>,
+  <span class="hljs-attr">"eslint-config-airbnb-typescript"</span>: <span class="hljs-string">"^14.00"</span>,
+  <span class="hljs-attr">"eslint-config-prettier"</span>: <span class="hljs-string">"^8.3.0"</span>,
+  <span class="hljs-attr">"eslint-import-resolver-alias"</span>: <span class="hljs-string">"^1.1.2"</span>,
+  <span class="hljs-attr">"eslint-plugin-import"</span>: <span class="hljs-string">"^2.25.4"</span>,
+  <span class="hljs-attr">"eslint-plugin-jsx-a11y"</span>: <span class="hljs-string">"^6.5.1"</span>,
+  <span class="hljs-attr">"eslint-plugin-prettier"</span>: <span class="hljs-string">"^4.0.0"</span>,
+  <span class="hljs-attr">"eslint-plugin-react"</span>: <span class="hljs-string">"^7.28.0"</span>,
+  <span class="hljs-attr">"prettier"</span>: <span class="hljs-string">"^2.4.1"</span>,
 &#125;</code></pre>
 
-<p><strong>注意：</strong> 修改与 SSL 相关的配置后，建议<strong>重启</strong> nginx 而不是使用 <code>nginx -s reload</code><br>可以使用 <code>sudo systemctl restart nginx</code> 等</p>
+<ul>
+<li>Prettier 的配置就比较简单了, 最简单的方式就是不配置, 用默认配置, 新建 .prettierrc 文件放一对大括号就行了</li>
+<li>我用到的有这几个</li>
+</ul>
+<pre><code class="hljs json">&#123;
+  <span class="hljs-attr">"printWidth"</span>: <span class="hljs-number">120</span>, <span class="hljs-comment">// 换行字数</span>
+  <span class="hljs-attr">"singleQuote"</span>: <span class="hljs-literal">true</span>, <span class="hljs-comment">// 单引号</span>
+  <span class="hljs-attr">"endOfLine"</span>: <span class="hljs-string">"auto"</span>, <span class="hljs-comment">// 换行符</span>
+  <span class="hljs-attr">"trailingComma"</span>: <span class="hljs-string">"all"</span> <span class="hljs-comment">// 多参数换行最后结尾的逗号</span>
+&#125;</code></pre>
 
             </article>
             <hr>
@@ -278,18 +326,12 @@ DELIMITER ;</code></pre>
                   <div class="post-prev col-6">
                     
                     
-                      <a href="/20200621/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">又是怀疑人生的一天</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </div>
                   <div class="post-next col-6">
                     
                     
-                      <a href="/20200322/">
-                        <span class="hidden-mobile">心情逐渐平静</span>
+                      <a href="/20211214-summary/">
+                        <span class="hidden-mobile">Webpack 多级路由与 Echarts 折线非节点选中</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
