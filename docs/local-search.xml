@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>win10 LTSC 2021 开启多用户 RDP 远程登录</title>
+    <link href="/win10-multiple-RDP/"/>
+    <url>/win10-multiple-RDP/</url>
+    
+    <content type="html"><![CDATA[<p><img src="/img/post/FY7smBWUcAAaaB2.jpg" srcset="/img/loading.gif" alt=""></p><!-- TOC --><ul><li><a href="#%E7%AE%80%E4%BB%8B">简介</a></li><li><a href="#%E5%89%8D%E7%BD%AE%E6%9D%A1%E4%BB%B6">前置条件</a></li><li><a href="#%E5%85%B7%E4%BD%93%E6%93%8D%E4%BD%9C">具体操作</a></li><li><a href="#%E6%80%BB%E7%BB%93">总结</a></li></ul><!-- /TOC --><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>win10 默认不支持多用户同时登录，需要借助软件修改 RDP 功能，win10 普通版和 LTSC 2021 版本均适用</p><blockquote><p>参考链接 <a href="https://woshub.com/how-to-allow-multiple-rdp-sessions-in-windows-10/" target="_blank" rel="noopener">How to Allow Multiple RDP Sessions in Windows 10 and 11? | Windows OS Hub</a></p></blockquote><h3 id="前置条件"><a href="#前置条件" class="headerlink" title="前置条件"></a>前置条件</h3><ul><li><p>下载 RDPWrap，地址 <a href="https://github.com/binarymaster/rdpwrap/releases" target="_blank" rel="noopener">Releases · stascorp/rdpwrap · GitHub</a></p></li><li><p>下载最新配置文件 地址 <a href="https://raw.githubusercontent.com/sebaxakerhtc/rdpwrap.ini/master/rdpwrap.ini" target="_blank" rel="noopener">rdpwrap.ini</a></p></li></ul><h3 id="具体操作"><a href="#具体操作" class="headerlink" title="具体操作"></a>具体操作</h3><ol><li><p>配置组策略</p><ul><li><p>快捷键 <code>Win+R</code> 打开 <code>运行</code>，输入 <code>gpedit.msc</code> 打开 <code>本地组策略编辑器</code></p></li><li><p>依次点开 <code>本地计算机 策略 &gt; 计算机配置 &gt; 管理模板 &gt; Windows 组件 &gt; 远程桌面服务 &gt; 远程桌面会话主机 &gt; 连接</code></p></li><li><p>查看右侧设置项，需要修改 3 个配置，分别如下</p><ul><li><p>开启 <code>允许用户通过使用远程桌面服务进行远程连接</code></p><p><img src="/img/post/multi-rdp/2023-01-08_16-10-07.png" srcset="/img/loading.gif" alt="2023-01-08_16-10-07.png"></p></li><li><p>开启 <code>限制连接的数量</code>，并设置最大连接数，根据需求设置即可</p><p><img src="/img/post/multi-rdp/2023-01-08_16-10-45.png" srcset="/img/loading.gif" alt="2023-01-08_16-10-45.png"></p></li><li><p>开启 <code>将远程桌面服务用户限制到单独的远程桌面服务会话</code>，<strong>重要选项</strong>，用来保持用户程序的后台运行</p><p><img src="/img/post/multi-rdp/2023-01-08_16-11-05.png" srcset="/img/loading.gif" alt="2023-01-08_16-11-05.png"></p></li></ul></li><li><p>修改完成后需要刷新组策略，右键管理员打开 <code>cmd</code> 或者 <code>powershell</code>，输入 <code>gpupdate /force</code>，刷新完成后即可关闭命令行</p></li></ul></li><li><p>安装 RDPWrap</p><ul><li><p>打开下载的 RDPWrap 文件夹，右键管理员运行 <code>install.bat</code></p></li><li><p>双击运行 <code>RDPConf.exe</code></p><p><img src="/img/post/multi-rdp/2023-01-08_16-34-28.png" srcset="/img/loading.gif" alt="2023-01-08_16-34-28.png"></p></li><li><p>查看右上角，如果显示红色的 <code>[not supported]</code>，先关闭 RDPConf, 再用下载的 <code>rdpwrap.ini</code> 覆盖 <code>C:\Program Files\RDP Wrapper\rdpwrap.ini</code></p></li><li><p>不用重启电脑，重新运行 <code>RDPConf.exe</code>，此时右上角应该显示绿色的 <code>[fully supported]</code></p></li><li><p><strong>至此多用户登录设置已经完成</strong>，如果本地账户只有一个，继续参考后续内容添加用户即可</p></li></ul></li><li><p>*添加用户并配置远程登录权限</p><ul><li><p>右键点击桌面左下角 <code>Win</code> 标志，点击打开 <code>计算机管理</code></p></li><li><p>依次打开 <code>系统工具 &gt; 本地用户和组 &gt; 用户</code></p></li><li><p>右键点击 <code>用户</code>，选择 <code>新用户</code>，根据需求创建新用户，完成后即可关闭 <code>计算机管理</code></p></li><li><p>回到桌面，依次打开 <code>系统设置 &gt; 系统 &gt; 远程桌面 &gt; 选择可远程访问这台电脑的用户</code></p><p><img src="/img/post/multi-rdp/2023-01-08_16-51-50.png" srcset="/img/loading.gif" alt="2023-01-08_16-51-50.png"></p></li><li><p>依次打开 <code>添加 &gt; 高级 &gt; 立即查找</code>，在下方搜索结果中找到新添加的用户，依次确定即可</p><p><img src="/img/post/multi-rdp/2023-01-08_16-58-19.png" srcset="/img/loading.gif" alt="2023-01-08_16-58-19.png"></p></li></ul></li></ol><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>部分系统版本可能完成这些操作后，依然无法同时登录多个用户，可以尝试重启电脑，<strong>不推荐直接覆盖</strong> <code>c:\Windows\System32\termsrv.dll</code></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>开发日志</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>ESLint 与 Prettier 针对 TS 的配置总结</title>
     <link href="/20220301-eslint/"/>
     <url>/20220301-eslint/</url>

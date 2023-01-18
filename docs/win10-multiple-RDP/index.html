@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.ico">
+  <link rel="icon" type="image/png" href="/img/favicon.ico">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="yusa">
+  <meta name="keywords" content="">
+  <title>win10 LTSC 2021 开启多用户 RDP 远程登录 - 星の音</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_fmb4a04yx8h.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>星の音</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">
+              <i class="iconfont icon-home-fill"></i>
+              Home</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">
+              <i class="iconfont icon-archive-fill"></i>
+              Archives</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">
+              <i class="iconfont icon-category-fill"></i>
+              Categories</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">
+              <i class="iconfont icon-user-fill"></i>
+              About</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/links/">
+              <i class="iconfont icon-link-fill"></i>
+              Links</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/background1.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.4)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+                win10 LTSC 2021 开启多用户 RDP 远程登录
+              
+            </span>
+
+            
+              
+                <div class="mt-3 post-meta">
+                  <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+                  <time datetime="2023-01-18 10:40">
+                    2023年1月18日 上午
+                  </time>
+                </div>
+              
+
+              <div class="mt-1">
+                
+                  
+                  <span class="post-meta mr-2">
+                    <i class="iconfont icon-chart"></i>
+                    645 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta mr-2">
+                      <i class="iconfont icon-clock-fill"></i>
+                    
+                    
+                    7
+                     分钟
+                  </span>
+                
+
+                
+              </div>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <article class="markdown-body">
+              <p><img src="/img/post/FY7smBWUcAAaaB2.jpg" srcset="/img/loading.gif" alt=""></p>
+<!-- TOC -->
+
+<ul>
+<li><a href="#%E7%AE%80%E4%BB%8B">简介</a></li>
+<li><a href="#%E5%89%8D%E7%BD%AE%E6%9D%A1%E4%BB%B6">前置条件</a></li>
+<li><a href="#%E5%85%B7%E4%BD%93%E6%93%8D%E4%BD%9C">具体操作</a></li>
+<li><a href="#%E6%80%BB%E7%BB%93">总结</a></li>
+</ul>
+<!-- /TOC -->
+
+<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>win10 默认不支持多用户同时登录，需要借助软件修改 RDP 功能，win10 普通版和 LTSC 2021 版本均适用</p>
+<blockquote>
+<p>参考链接 <a href="https://woshub.com/how-to-allow-multiple-rdp-sessions-in-windows-10/" target="_blank" rel="noopener">How to Allow Multiple RDP Sessions in Windows 10 and 11? | Windows OS Hub</a></p>
+</blockquote>
+<h3 id="前置条件"><a href="#前置条件" class="headerlink" title="前置条件"></a>前置条件</h3><ul>
+<li><p>下载 RDPWrap，地址 <a href="https://github.com/binarymaster/rdpwrap/releases" target="_blank" rel="noopener">Releases · stascorp/rdpwrap · GitHub</a></p>
+</li>
+<li><p>下载最新配置文件 地址 <a href="https://raw.githubusercontent.com/sebaxakerhtc/rdpwrap.ini/master/rdpwrap.ini" target="_blank" rel="noopener">rdpwrap.ini</a></p>
+</li>
+</ul>
+<h3 id="具体操作"><a href="#具体操作" class="headerlink" title="具体操作"></a>具体操作</h3><ol>
+<li><p>配置组策略</p>
+<ul>
+<li><p>快捷键 <code>Win+R</code> 打开 <code>运行</code>，输入 <code>gpedit.msc</code> 打开 <code>本地组策略编辑器</code></p>
+</li>
+<li><p>依次点开 <code>本地计算机 策略 &gt; 计算机配置 &gt; 管理模板 &gt; Windows 组件 &gt; 远程桌面服务 &gt; 远程桌面会话主机 &gt; 连接</code></p>
+</li>
+<li><p>查看右侧设置项，需要修改 3 个配置，分别如下</p>
+<ul>
+<li><p>开启 <code>允许用户通过使用远程桌面服务进行远程连接</code></p>
+<p><img src="/img/post/multi-rdp/2023-01-08_16-10-07.png" srcset="/img/loading.gif" alt="2023-01-08_16-10-07.png"></p>
+</li>
+<li><p>开启 <code>限制连接的数量</code>，并设置最大连接数，根据需求设置即可</p>
+<p><img src="/img/post/multi-rdp/2023-01-08_16-10-45.png" srcset="/img/loading.gif" alt="2023-01-08_16-10-45.png"></p>
+</li>
+<li><p>开启 <code>将远程桌面服务用户限制到单独的远程桌面服务会话</code>，<strong>重要选项</strong>，用来保持用户程序的后台运行</p>
+<p><img src="/img/post/multi-rdp/2023-01-08_16-11-05.png" srcset="/img/loading.gif" alt="2023-01-08_16-11-05.png"></p>
+</li>
+</ul>
+</li>
+<li><p>修改完成后需要刷新组策略，右键管理员打开 <code>cmd</code> 或者 <code>powershell</code>，输入 <code>gpupdate /force</code>，刷新完成后即可关闭命令行</p>
+</li>
+</ul>
+</li>
+<li><p>安装 RDPWrap</p>
+<ul>
+<li><p>打开下载的 RDPWrap 文件夹，右键管理员运行 <code>install.bat</code></p>
+</li>
+<li><p>双击运行 <code>RDPConf.exe</code></p>
+<p><img src="/img/post/multi-rdp/2023-01-08_16-34-28.png" srcset="/img/loading.gif" alt="2023-01-08_16-34-28.png"></p>
+</li>
+<li><p>查看右上角，如果显示红色的 <code>[not supported]</code>，先关闭 RDPConf, 再用下载的 <code>rdpwrap.ini</code> 覆盖 <code>C:\Program Files\RDP Wrapper\rdpwrap.ini</code></p>
+</li>
+<li><p>不用重启电脑，重新运行 <code>RDPConf.exe</code>，此时右上角应该显示绿色的 <code>[fully supported]</code></p>
+</li>
+<li><p><strong>至此多用户登录设置已经完成</strong>，如果本地账户只有一个，继续参考后续内容添加用户即可</p>
+</li>
+</ul>
+</li>
+<li><p>*添加用户并配置远程登录权限</p>
+<ul>
+<li><p>右键点击桌面左下角 <code>Win</code> 标志，点击打开 <code>计算机管理</code></p>
+</li>
+<li><p>依次打开 <code>系统工具 &gt; 本地用户和组 &gt; 用户</code></p>
+</li>
+<li><p>右键点击 <code>用户</code>，选择 <code>新用户</code>，根据需求创建新用户，完成后即可关闭 <code>计算机管理</code></p>
+</li>
+<li><p>回到桌面，依次打开 <code>系统设置 &gt; 系统 &gt; 远程桌面 &gt; 选择可远程访问这台电脑的用户</code></p>
+<p><img src="/img/post/multi-rdp/2023-01-08_16-51-50.png" srcset="/img/loading.gif" alt="2023-01-08_16-51-50.png"></p>
+</li>
+<li><p>依次打开 <code>添加 &gt; 高级 &gt; 立即查找</code>，在下方搜索结果中找到新添加的用户，依次确定即可</p>
+<p><img src="/img/post/multi-rdp/2023-01-08_16-58-19.png" srcset="/img/loading.gif" alt="2023-01-08_16-58-19.png"></p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>部分系统版本可能完成这些操作后，依然无法同时登录多个用户，可以尝试重启电脑，<strong>不推荐直接覆盖</strong> <code>c:\Windows\System32\termsrv.dll</code></p>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%BC%80%E5%8F%91%E6%97%A5%E5%BF%97/">开发日志</a>
+                    
+                  </div>
+                
+                
+              </div>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/20220301-eslint/">
+                        <span class="hidden-mobile">ESLint 与 Prettier 针对 TS 的配置总结</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+  <div>
+    
+      <!-- 不蒜子统计PV -->
+      
+      <span id="busuanzi_container_site_pv" style="display: none">
+      总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    </span>
+    
+    
+      <!-- 不蒜子统计UV -->
+      
+      <span id="busuanzi_container_site_uv" style="display: none">
+      总访客数 <span id="busuanzi_value_site_uv"></span> 人
+    </span>
+    
+  </div>
+
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+<!-- Plugins -->
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
