@@ -83,7 +83,11 @@ pnpm 初始化一个 monorepo 项目很简单，不啰嗦，但是把两个独�
   "include": ["packages/*/src"]
 }
 
-// 子目录 tsconfig，先 extends，然后要用 baseUrl 指明当前文件所处的相对路径，再配置路径别名，不然路径别名就是相对根目录的了
+/**
+  * 子目录 tsconfig，先 extends，然后要用 baseUrl 指明当前文件所处的相对路径
+  * 再配置路径别名，不然路径别名就是相对根目录的了
+  * 注意子项目的配置一定要有 include 指明当前子项目路径，不然打包时 ts 会把根目录作为项目路径
+  */
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
@@ -94,7 +98,9 @@ pnpm 初始化一个 monorepo 项目很简单，不啰嗦，但是把两个独�
         "./src/*"
       ]
     }
-  }
+  },
+
+  "include": ["./src", "./postcss.config.js", "tailwind.config.js"]
 }
 
 ```

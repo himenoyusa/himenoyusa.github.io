@@ -145,7 +145,7 @@
                   
                   <span class="post-meta mr-2">
                     <i class="iconfont icon-chart"></i>
-                    1.1k 字
+                    1.2k 字
                   </span>
                 
 
@@ -249,7 +249,11 @@
   <span class="hljs-attr">"include"</span>: [<span class="hljs-string">"packages/*/src"</span>]
 &#125;
 
-<span class="hljs-comment">// 子目录 tsconfig，先 extends，然后要用 baseUrl 指明当前文件所处的相对路径，再配置路径别名，不然路径别名就是相对根目录的了</span>
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment">  * 子目录 tsconfig，先 extends，然后要用 baseUrl 指明当前文件所处的相对路径</span>
+<span class="hljs-comment">  * 再配置路径别名，不然路径别名就是相对根目录的了</span>
+<span class="hljs-comment">  * 注意子项目的配置一定要有 include 指明当前子项目路径，不然打包时 ts 会把根目录作为项目路径</span>
+<span class="hljs-comment">  */</span>
 &#123;
   <span class="hljs-attr">"extends"</span>: <span class="hljs-string">"../../tsconfig.json"</span>,
   <span class="hljs-attr">"compilerOptions"</span>: &#123;
@@ -260,7 +264,9 @@
         <span class="hljs-string">"./src/*"</span>
       ]
     &#125;
-  &#125;
+  &#125;,
+
+  <span class="hljs-attr">"include"</span>: [<span class="hljs-string">"./src"</span>, <span class="hljs-string">"./postcss.config.js"</span>, <span class="hljs-string">"tailwind.config.js"</span>]
 &#125;</code></pre>
 
 <ol start="2">
